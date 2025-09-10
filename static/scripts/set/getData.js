@@ -1,23 +1,22 @@
-// 使用AJAX(axios框架)向后端获取数据
-axios({
-    method: "get",
-    url: "/data/loadingData"
-})
-    .then(response => {
-        Main.value = response.data.mainHeader;
-        Sub.value = response.data.subHeader;
-        Time.value = response.data.startTime;
-    });
+fetch('/data/loading', {
+    method: 'GET'
+}).then(data => data.json())
+    .then(data => {
+        Main.value = data.mainHeader === "" ? "xx活动" : data.mainHeader;
+        Sub.value = data.subHeader === "" ? "主办方：xxx" : data.subHeader;
+        Time.value = data.startTime
+    })
 
-axios({
-    method: "get",
-    url: "/data/pauseData"
-})
-    .then(response => {
-        Header.value = response.data.headerText;
-        Describe.value = response.data.describeText;
-    });
 
+
+fetch('/data/pause', {
+    method: 'GET'
+}).then(data => data.json())
+    .then(data => {
+            Header.value = data.headerText === "" ? "活动暂停" : data.headerText;
+            Describe.value = data.describeText === "" ? "请稍等" : data.describeText;
+        }
+    )
 
 const inputs = document.querySelectorAll("input");
 inputs.forEach((input) => {

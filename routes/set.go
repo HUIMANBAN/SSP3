@@ -2,18 +2,18 @@ package routes
 
 import (
 	"github.com/gin-gonic/gin"
+	"io/fs"
+	"net/http"
 )
 
-func SetRoutes(r *gin.Engine) {
+func SetRoutes(r *gin.Engine, staticFS fs.FS) {
 	setGroup := r.Group("/set")
 
 	setGroup.GET("/landscape", func(c *gin.Context) {
-		c.Header("Content-Type", "text/html; charset=utf-8")
-		c.File("./static/views/set/L-set.html")
+		c.FileFromFS("views/set/L-set.html", http.FS(staticFS))
 	})
 
 	setGroup.GET("/portrait", func(c *gin.Context) {
-		c.Header("Content-Type", "text/html; charset=utf-8")
-		c.File("./static/views/set/P-set.html")
+		c.FileFromFS("views/set/P-set.html", http.FS(staticFS))
 	})
 }

@@ -22,10 +22,6 @@ function isCorrectFile(file) {
     }
 }
 
-//海报上传
-if (id === "1") {
-
-}
 DropArea.addEventListener("mousedown", function () {
     if (id === "1") {
         FileUpload.click();
@@ -68,6 +64,7 @@ document.addEventListener("drop", (e) => {
 
 //===================================================================================
 const loading_submit = document.querySelector("#loading-submit");
+
 //提交按钮
 function changeLoadingSubmitStatus() {
     loading_submit.style.pointerEvents = "none";
@@ -96,37 +93,42 @@ function loadingPost() {
     if (file && isCorrectFile(file)) {
         const formData = new FormData();
         formData.append("poster", file);
-        axios({
-            method: "post",
-            url: "/data/upload",
-            data: formData,
-            headers: {
-                "Content-Type": "multipart/form-data"
-            }
-        });
+
+        fetch('/data/upload', {
+            method: "POST",
+            body: formData
+        }).then(res => res.json())
+            .then(data => {
+                if (data.code === 0 && data.msg === "UploadSuccessful") {
+                    Iframe.contentWindow.location.reload();
+                }
+            })
     }
 
-    axios({
-        method: "post",
-        url: "/data/loadingData",
-        data: {
+    fetch('/data/loading', {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
             mainHeader: Main.value,
             subHeader: Sub.value,
             startTime: Time.value,
             timestamp: timestamp
-        }
-    }).then((res) => {
+        })
+    }).then(res => {
         if (res.status === 200) {
             Iframe.contentWindow.location.reload();
         }
-    });
+    })
+
 }
 
 loading_submit.addEventListener("click", function () {
     loadingPost();
 });
 window.addEventListener("keydown", function (e) {
-    if (loading_submit.style.pointerEvents !== "none"){
+    if (loading_submit.style.pointerEvents !== "none") {
         if (e.key === "Enter" && id === "1") {
             e.preventDefault();
             loadingPost();

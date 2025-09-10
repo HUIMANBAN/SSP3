@@ -2,11 +2,12 @@ package routes
 
 import (
 	"github.com/gin-gonic/gin"
+	"io/fs"
+	"net/http"
 )
 
-func ModeRoutes(r *gin.Engine) {
+func ModeRoutes(r *gin.Engine, staticFS fs.FS) {
 	r.GET("/mode", func(c *gin.Context) {
-		c.Header("Content-Type", "text/html; charset=utf-8")
-		c.File("./static/views/set/mode.html")
+		c.FileFromFS("views/set/mode.html", http.FS(staticFS))
 	})
 }

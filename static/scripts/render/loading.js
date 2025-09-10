@@ -49,14 +49,12 @@ function startCountdown(timestamp) {
     }
 }
 
-axios({
-    method: 'get',
-    url: '/data/loadingData',
-})
-    .then(response => {
-        //主副标题渲染
-        mainHeaderElement.innerHTML = response.data.mainHeader;
-        subHeaderElement.innerHTML = response.data.subHeader;
-        //开始倒计时
-        startCountdown(response.data.timestamp);
-    });
+fetch('/data/loading')
+    .then(res => res.json())
+    .then(data => {
+        // 主副标题渲染
+        mainHeaderElement.innerHTML = data.mainHeader === "" ? "xx活动" : data.mainHeader;
+        subHeaderElement.innerHTML = data.subHeader === "" ? "主办方：xxx" : data.subHeader;
+        // 开始倒计时
+        startCountdown(data.timestamp);
+    })

@@ -22,14 +22,21 @@ function changePauseSubmitStatus() {
 function pausePost() {
     changePauseSubmitStatus();
     Iframe.contentWindow.location.reload();
-    axios.post("/data/pauseData", {
-        headerText: Header.value,
-        describeText: Describe.value
-    }).then((res) => {
-        if (res.status === 200) {
-            Iframe.contentWindow.location.reload();
-        }
-    });
+    fetch("/data/pause", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"   // axios 默认会加，这里要手动写
+        },
+        body: JSON.stringify({
+            headerText: Header.value,
+            describeText: Describe.value
+        })
+    })
+        .then(res => {
+            if (res.status === 200) {
+                Iframe.contentWindow.location.reload();
+            }
+        })
 }
 
 pause_submit.addEventListener("click", ()=>{

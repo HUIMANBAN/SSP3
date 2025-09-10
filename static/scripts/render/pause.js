@@ -1,12 +1,10 @@
 const pauseTitleElement = document.querySelector('#pauseTitle');
 const pauseHtmlElement = document.querySelector('#pauseHtml');
 
-axios({
-    method: 'get',
-    url: '/data/pauseData',
+
+fetch('/data/pause')
+    .then(res => res.json())
+.then(data => {
+    pauseTitleElement.innerHTML = data.headerText === "" ? "活动暂停" : data.headerText;
+    pauseHtmlElement.innerHTML = data.describeText === "" ? "请稍等" : data.describeText;
 })
-    .then(response => {
-        //主副标题渲染
-        pauseTitleElement.innerHTML = response.data.headerText;
-        pauseHtmlElement.innerHTML = response.data.describeText;
-    });
