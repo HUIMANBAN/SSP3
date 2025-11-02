@@ -16,5 +16,5 @@ func PrintAuthorInfo() {
 		"  \\______/       |______/       \\______/")
 	fmt.Println("\n程序原创：黄浩泓、刘梦云、马世龙（1.0版本）\n程序重构：许文彬（2.0版本 & 3.0版本）")
 	fmt.Println("温馨提示：直播期间请勿关闭黑窗口！！！")
-	fmt.Println("当前版本：\x1b[32mv3.0.1\x1b[0m")
+	fmt.Println("当前版本：\x1b[32mv3.0.2\x1b[0m")
 }

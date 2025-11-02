@@ -72,6 +72,7 @@ body {
     place-items: center;
     align-content: center;
     position: absolute;
+    text-align: center;
     /*尺寸和边距*/
     margin-top: 22vh;
     margin-left: 60vw;
